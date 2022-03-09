@@ -93,11 +93,19 @@ SolverFactory::createMapleCOMSPSSolvers(int maxSolvers,
    solvers.push_back(createMapleCOMSPSSolver());
 
    double memoryUsed    = getMemoryUsed();
-   int maxMemorySolvers = Parameters::getIntParam("max-memory", 240) * 1024 *
-                          1024 / memoryUsed;
-
-   if (maxSolvers > maxMemorySolvers) {
-      maxSolvers = maxMemorySolvers;
+   // modified by nabesima
+   // int maxMemorySolvers = Parameters::getIntParam("max-memory", 240) * 1024 *
+   //                        1024 / memoryUsed;
+   // if (maxSolvers > maxMemorySolvers) {
+   //    maxSolvers = maxMemorySolvers;
+   // }
+   if (memoryUsed >= 250 * 1024) {  // heuristics
+      int maxMemorySolvers = Parameters::getIntParam("max-memory", 240) * 1024 * 1024 / (memoryUsed * 3);  // heuristics
+      if (maxSolvers > maxMemorySolvers) {
+         maxSolvers = maxMemorySolvers;
+         cout << "c NOTE: # of threads is adjusted to " << maxSolvers << " to avoid consuming all memory" << endl;
+         cout << "c" << endl;         
+      }
    }
 
    for (int i = 1; i < maxSolvers; i++) {
