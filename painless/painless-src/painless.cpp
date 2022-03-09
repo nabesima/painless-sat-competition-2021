@@ -95,6 +95,8 @@ int main(int argc, char ** argv)
    solvers.push_back(SolverFactory::createReducerSolver(SolverFactory::createMapleCOMSPSSolver()));
    solvers.push_back(SolverFactory::createReducerSolver(SolverFactory::createMapleCOMSPSSolver()));
    int nSolvers = solvers.size();
+   // modified by nabesima
+   cpu = nSolvers;
 
    SolverFactory::nativeDiversification(solvers);
 
