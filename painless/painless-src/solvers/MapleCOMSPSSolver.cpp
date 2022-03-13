@@ -189,11 +189,15 @@ MapleCOMSPSSolver::unsetSolverInterrupt()
 void
 MapleCOMSPSSolver::diversify(int id)
 {
-   if (id == ID_XOR) {
-      solver->GE = true;
-   } else {
-      solver->GE = false;
-   }
+   // if (id == ID_XOR) {
+   //    solver->GE = true;
+   // } else {
+   //    solver->GE = false;
+   // }
+   
+   // disable all preprocessing
+   solver->GE = false;
+   solver->disableSimplification();
 
    if (id % 2) {
       solver->VSIDS = false;
